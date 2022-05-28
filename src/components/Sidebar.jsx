@@ -61,7 +61,7 @@ export default function Sidebar() {
       postData()
       dispatch(postDataToReducer(payload))
     }
-   window.location.reload(false)
+  //  window.location.reload(false)
   }
  
 
@@ -75,7 +75,7 @@ export default function Sidebar() {
     }
     deleteDatafromUi() 
     dispatch(deleteData(id))
-    window.location.reload(false)
+    // window.location.reload(false)
     // console.log(id)    
   } 
 
@@ -85,6 +85,9 @@ export default function Sidebar() {
         <div className='app-sidebar-header'>
             <IoSearchOutline className='search-icon'/>
             <input type="text" onChange={event => setQuery(event.target.value)} />
+            <div className='app-sidebar-header'>
+            <button onClick={addToNotes}>+</button>              
+            </div>
             
         </div>
         <div className="app-sidebar-notes">
@@ -117,10 +120,7 @@ export default function Sidebar() {
         </div>
         </div>
         <div className='app-main'>
-        <div className="app-main-note-edit">
-            <div className='app-sidebar-header'>
-            <button onClick={addToNotes}>+</button>              
-            </div>
+        <div className="app-main-note-edit">            
             <input type="text" id='title' value={input} autoFocus onChange={(e)=> setInput(e.target.value)}/>
             <textarea id="body" cols="30" value={text} rows="10" onChange={(e)=> setTextarea(e.target.value)}></textarea>
 
