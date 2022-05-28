@@ -23,7 +23,7 @@ export default function Sidebar() {
 
   const dispatch = useDispatch()
 
-  const selector = useSelector((state)=> state.getData)
+  const selector = useSelector((state)=> state.getData)  
 
 
    //MAKE NEW NOTES AND ADD TO LIST
@@ -31,22 +31,37 @@ export default function Sidebar() {
   const addToNotes = () => {
     let id = uuidv4();
     // console.log(id)
-    if(editTime != null && editTime != "")
+    if(editTime != "")
     {
+      const payload = {
+        Title: input,
+        Description: text, 
+        UniqueId: id         
+      }
+      let nArr = []
+      
+      selector.map((el)=>{
+        if(el.UniqueId == payload.UniqueId){
+          nArr.push(payload)
+        } else {
+          nArr.push(el)
+        }
+      })
+      dispatch(updateData(nArr))
       async function editData() {
         const { data, error } = await supabase
           .from('users')
           .update({ Title: input, Description:text })
-          .eq('Time', editTime)      
+          .eq('UniqueId', editTime)      
       }
       editData()
-      dispatch(updateData(id))
+    
     }
     else{
       const payload = {
         Title: input,
         Description: text, 
-        Time: id         
+        UniqueId: id         
       }
       // console.log(payload)
       async function postData() {
@@ -55,7 +70,7 @@ export default function Sidebar() {
             .insert([{
               Title: input,
               Description: text,
-              Time: id     
+              UniqueId: id     
             }])
       }
       postData()
@@ -71,11 +86,10 @@ export default function Sidebar() {
       const { data, error } = await supabase
             .from('users')
             .delete()
-            .eq("Time", id)
+            .eq("UniqueId", id)
     }
     deleteDatafromUi() 
     dispatch(deleteData(id))
-    // window.location.reload(false)
     // console.log(id)    
   } 
 
@@ -103,14 +117,15 @@ export default function Sidebar() {
                             }
                           })
                         .map((el)=>{
+                          // console.log(el+"new")
                         return(
                             <div className='sidebar-note-title' onClick={()=> {
                               setInput(el.Title);
                               setTextarea(el.Description);
-                              setEditTime(el.Time);
+                              setEditTime(el.UniqueId);
                             }}>
                             <h4>{el.Title}</h4>
-                            <button onClick={()=>deleteItem(el.Time)}>Delete</button>
+                            <button onClick={()=>deleteItem(el.UniqueId)}>Delete</button>
                             </div>
                         )
                         })

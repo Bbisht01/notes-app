@@ -21,7 +21,7 @@ export const Reducer = (state=initialState,{type,payload}) =>{
         case UPDATE_DATA:
             return {
                 ...state,
-                newId: payload             
+                getData : payload   
             }
         case DELETE_DATA:
             return {
