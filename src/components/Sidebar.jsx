@@ -82,12 +82,13 @@ export default function Sidebar() {
   return (    
     <div className='app-sidebar'>
         <div className="container">
+          <div className='header'>
+          <h3>Notes App</h3>
+          <button onClick={addToNotes}><img src="https://www.way2order.com/images/edit.png" width="22px" alt='img'/></button>
+          </div>
         <div className='app-sidebar-header'>
             <IoSearchOutline className='search-icon'/>
-            <input type="text" onChange={event => setQuery(event.target.value)} />
-            <div className='app-sidebar-header'>
-            <button onClick={addToNotes}>+</button>              
-            </div>
+            <input type="text" placeholder='Search all notes...' onChange={event => setQuery(event.target.value)} />           
             
         </div>
         <div className="app-sidebar-notes">
@@ -108,7 +109,7 @@ export default function Sidebar() {
                               setTextarea(el.Description);
                               setEditTime(el.Time);
                             }}>
-                            <h3>{el.Title}</h3>
+                            <h4>{el.Title}</h4>
                             <button onClick={()=>deleteItem(el.Time)}>Delete</button>
                             </div>
                         )
