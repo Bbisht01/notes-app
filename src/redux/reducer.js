@@ -19,10 +19,22 @@ export const Reducer = (state=initialState,{type,payload}) =>{
                 getData: [...state.getData, payload]                
             }
         case UPDATE_DATA:
-            return {
-                ...state,
-                getData : payload   
-            }
+            let narr = []
+         function editing(){
+             
+            state.getData.map((e)=>{
+                // console.log(payload.id,e.id)
+                if(e.UniqueId == payload.UniqueId){
+                   e = payload
+                }
+                narr.push(e)
+            })
+         }
+         editing()
+         return{
+             ...state,
+             getData:narr
+         }
         case DELETE_DATA:
             return {
                 ...state,
